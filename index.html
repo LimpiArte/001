@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LimpiArte</title>
+    <link rel="icon" href="https://raw.githubusercontent.com/LimpiArte/main/logotipo-LimpiArte.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/storage/emulated/0/aaabbb/LimpiArte/stile.css">
+    <style>
+        
+    </style>
+</head>
+<body>
+    <header>
+        <div>
+            <h1>LimpiArte</h1>
+            <p>Productos de limpieza<br>Envíos sin cargo</p>
+        </div>
+        <img src="/storage/emulated/0/actualmente es lo mejor/logotipo LimpiArte .jpg" alt="Logo LimpiArte" class="logo-img">
+    </header>
+
+    <div class="carousel-container">
+        <div class="carousel-content">
+            <div class="carousel-item" data-title="Título 1" data-caption="Descripción de la imagen 1">
+                <img src="https://github.com/LimpiArte/007/blob/55002f932b075bc210c430feb5de304a11e602b8/pro.limpieza-1.png" alt="Imagen 1">
+                <div class="carousel-text">
+                    <h3 class="carousel-title"></h3>
+                    <p class="carousel-caption"></p>
+                </div>
+            </div>
+            <div class="carousel-item" data-title="Título 2" data-caption="Descripción de la imagen 2">
+                <img src="https://github.com/LimpiArte/007/blob/55002f932b075bc210c430feb5de304a11e602b8/pro.limpieza-1.png" alt="Imagen 2">
+                <div class="carousel-text">
+                    <h3 class="carousel-title"></h3>
+                    <p class="carousel-caption"></p>
+                </div>
+            </div>
+            <div class="carousel-item" data-title="Título 3" data-caption="Descripción de la imagen 3">
+                <img src="https://picsum.photos/id/239/600/400" alt="Imagen 3">
+                <div class="carousel-text">
+                    <h3 class="carousel-title"></h3>
+                    <p class="carousel-caption"></p>
+                </div>
+            </div>
+            <div class="carousel-item" data-title="Título 4" data-caption="Descripción de la imagen 4">
+                <img src="https://picsum.photos/id/240/600/400" alt="Imagen 4">
+                <div class="carousel-text">
+                    <h3 class="carousel-title"></h3>
+                    <p class="carousel-caption"></p>
+                </div>
+            </div>
+            <div class="carousel-item" data-title="Título 5" data-caption="Descripción de la imagen 5">
+                <img src="https://picsum.photos/id/241/600/400" alt="Imagen 5">
+                <div class="carousel-text">
+                    <h3 class="carousel-title"></h3>
+                    <p class="carousel-caption"></p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-btn carousel-prev">◀</button>
+        <button class="carousel-btn carousel-next">▶</button>
+        <div class="carousel-indicators"></div>
+    </div>
+
+    <script>
+        const carouselContent = document.querySelector('.carousel-content');
+        const prevBtn = document.querySelector('.carousel-prev');
+        const nextBtn = document.querySelector('.carousel-next');
+        const indicatorsContainer = document.querySelector('.carousel-indicators');
+        let autoPlayInterval;
+
+        let currentIndex = 0;
+        const totalItems = 5;
+
+        // Inicializar textos
+        document.querySelectorAll('.carousel-item').forEach(item => {
+            const title = item.dataset.title;
+            const caption = item.dataset.caption;
+            item.querySelector('.carousel-title').textContent = title;
+            item.querySelector('.carousel-caption').textContent = caption;
+        });
+
+        // Crear indicadores
+        for (let i = 0; i < totalItems; i++) {
+            const indicator = document.createElement('div');
+            indicator.classList.add('carousel-indicator');
+            if (i === 0) indicator.classList.add('active');
+            indicator.addEventListener('click', () => goToIndex(i));
+            indicatorsContainer.appendChild(indicator);
+        }
+
+        function updateCarousel() {
+            const itemWidth = document.querySelector('.carousel-item').offsetWidth;
+            carouselContent.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
+
+            document.querySelectorAll('.carousel-indicator').forEach((indicator, index) => {
+                indicator.classList.toggle('active', index === currentIndex);
+            });
+
+            prevBtn.style.display = 'block';
+            nextBtn.style.display = 'block';
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % totalItems;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + totalItems) % totalItems;
+            updateCarousel();
+        }
+
+        function goToIndex(index) {
+            currentIndex = index;
+            updateCarousel();
+            resetAutoplay();
+        }
+
+        function startAutoplay() {
+            autoPlayInterval = setInterval(nextSlide, 3000);
+        }
+
+        function resetAutoplay() {
+            clearInterval(autoPlayInterval);
+            startAutoplay();
+        }
+
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetAutoplay();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetAutoplay();
+        });
+
+        window.addEventListener('resize', updateCarousel);
+
+        // Iniciar autoplay
+        startAutoplay();
+        updateCarousel();
+    </script>
+
+    <main>
+        <section class="productos" id="categorias-container"></section>
+
+        <div class="total-container">
+            Total: $<span id="total">0</span>
+        </div>
+
+        <div class="list-container">
+            <h3>Productos Seleccionados</h3>
+            <ul id="product-list"></ul>
+        </div>
+
+        <button id="send-whatsapp">📤 Enviar pedido por WhatsApp</button>
+    </main>
+
+    <footer>© 2025 - Tienda LimpiArte</footer>
+
+    <script>
+        const products = {
+            "Aerosoles y Productos para Insectos": {
+                "Glade aerosol": 3200,
+                "Baygon mata mosca y mosquito": 4500,
+                "Raid": 5000
+            },
+            "Productos para el Hogar": {
+                "Glade limpia inodoro adhesivo": 2000,
+                "Glade pastilla inodoro ch canasta": 1300,
+                "Cepillo mano Glady": 1000,
+                "Esponja 2X1 con lana de acero": 1200,
+                "Esponja GO": 800,
+                "Esponja acanalada": 1000,
+                "Esponja acero chica": 700,
+                "Esponja acero grande": 900,
+                "Trapo piso": 800,
+                "Rejilla": 1000,
+                "Repasador toalla": 1500,
+                "Broches madera": 1200,
+                "Cabo madera": 1200,
+                "Escobillón": 2800
+            },
+            "Productos de Limpieza": {
+                "Detergente envasado Cif x300": 2200,
+                "Detergente envasado Magistral x300": 2800,
+                "Detergente envasado gigante x500": 1600,
+                "Cloro": 900,
+                "Lysofort, BB": 800,
+                "Limpia vidrio": 1500,
+                "Desengrasante": 1400,
+                "Detergente tipo magistral": 1500
+            },
+            "Cuidado Personal": {
+                "Odol crema dental": 2300,
+                "Jabón Duc Individual": 800,
+                "Jabón de tocador Kenia x3": 1900,
+                "Jabón de tocador Sequence x3": 1900,
+                "Jabón de tocador Sequence x1": 700,
+                "Desodorante en crema": 2800,
+                "Talco Rexona Efficient": 3000,
+                "Shampoo tipo Pantene": 2000,
+                "Shampoo plusbelle": 4300,
+                "Acondicionador tipo Pantene": 2000,
+                "Gillette Ultra Grip x3": 1900
+            },
+            "Productos Textiles": {
+                "Perfume textil BB": 3800,
+                "Perfume textil Arpege": 3000,
+                "Suavizante celeste": 2000,
+                "Jabón líquido Skip": 1300,
+                "Jabón líquido Ariel": 1500,
+                "Jabón líquido de mano": 2700
+            },
+            "Papelería y Productos de Higiene": {
+                "Papel higienico Campanita texturado": 1700,
+                "Papel higienico Campanita soft": 1900,
+                "Papel higienico Campanita Plus": 2300,
+                "Servilleta Campanita": 2500,
+                "Servilleta You": 2000,
+                "Servilleta x70un": 1500
+            },
+            "Productos de Higiene Femenina": {
+                "Toallitas femeninas Doncella": 900,
+                "Toallitas femeninas Lady Soft": 1500,
+                "Protector Diario Doncella": 1000
+            },
+            "Otros Productos": {
+                "Banda negra": 3000,
+                "Creolina": 5000,
+                "Sahumerios 10x": 1500
+            }
+        };
+
+        let carrito = {};
+        let total = 0;
+
+        function slugify(text) {
+            return text.toLowerCase()
+                .replace(/\s+/g, '-')
+                .replace(/[^a-z0-9-]/g, '');
+        }
+
+        function cargarProductos() {
+            const container = document.getElementById('categorias-container');
+
+            Object.entries(products).forEach(([categoria, productos]) => {
+                const details = document.createElement('details');
+                const summary = document.createElement('summary');
+                summary.textContent = categoria;
+
+                const table = document.createElement('table');
+                const tbody = document.createElement('tbody');
+
+                Object.entries(productos).forEach(([producto, precio]) => {
+                    const tr = document.createElement('tr');
+                    const productId = slugify(producto);
+
+                    tr.innerHTML = `
+                        <td>${producto}</td>
+                        <td>  $${precio}</td>
+                        <td>
+                            <div class="contador">
+                                <button onclick="ajustarCantidad('${productId}', -1)">-</button>
+                                <button onclick="ajustarCantidad('${productId}', 1)">+</button>
+                                <span id="${productId}">0</span>
+                            </div>
+                        </td>
+                    `;
+
+                    tbody.appendChild(tr);
+                });
+
+                table.appendChild(tbody);
+                details.appendChild(summary);
+                details.appendChild(table);
+                container.appendChild(details);
+            });
+        }
+
+        function ajustarCantidad(productId, cambio) {
+            const contador = document.getElementById(productId);
+            let cantidad = parseInt(contador.textContent) || 0;
+
+            cantidad += cambio;
+            if (cantidad < 0) cantidad = 0;
+            contador.textContent = cantidad;
+
+            actualizarCarrito(productId, cantidad);
+            actualizarTotal();
+        }
+
+        function actualizarCarrito(productId, cantidad) {
+            const productoNombre = Object.entries(products)
+                .flatMap(([_, productos]) => Object.keys(productos))
+                .find(nombre => slugify(nombre) === productId);
+
+            if (cantidad > 0) {
+                carrito[productId] = {
+                    nombre: productoNombre,
+                    precio: products[Object.keys(products).find(cat => products[cat][productoNombre])][productoNombre],
+                    cantidad: cantidad
+                };
+            } else {
+                delete carrito[productId];
+            }
+
+            actualizarLista();
+        }
+
+        function actualizarTotal() {
+            total = Object.values(carrito).reduce((acc, item) =>
+                acc + (item.precio * item.cantidad), 0);
+            document.getElementById('total').textContent = total;
+        }
+
+        function actualizarLista() {
+            const lista = document.getElementById('product-list');
+            lista.innerHTML = '';
+
+            Object.values(carrito).forEach(item => {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <span>${item.nombre}</span>
+                    <span>
+                        x${item.cantidad}
+                        <span style="color: #27ae60;">  $${item.precio * item.cantidad}</span>
+                    </span>
+                `;
+                lista.appendChild(li);
+            });
+        }
+
+        document.getElementById('send-whatsapp').addEventListener('click', () => {
+            if (total === 0) {
+                alert("¡Tu carrito está vacío!");
+                return;
+            }
+
+            const mensaje = `🚀 Pedido LimpiArte 🚀\n\n${
+                Object.values(carrito).map(item =>
+                    `${item.nombre} x${item.cantidad} - $${item.precio * item.cantidad}`
+                ).join('\n')
+            }\n\nTotal: $${total}`;
+
+            window.open(`https://wa.me/5493541399892?text=${encodeURIComponent(mensaje)}`, '_blank');
+        });
+
+        // Inicialización
+        cargarProductos();
+    </script>
+</body>
+</html>
