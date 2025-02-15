@@ -444,13 +444,19 @@ footer {
 }
 
 
-/* Estilos para la sección de comentarios */
-.comment-section {
-    margin: 20px auto; /* Centrar y espaciado */
-    max-width: 800px; /* Ancho máximo */
-    padding: 20px; /* Espaciado interno */
-    background-color: transparent; /* Fondo transparente */
-    border-radius: 10px; /* Bordes redondeados */
+/* Estilo para el h3 dentro del contenedor .list-container */
+.list-container h3 {
+    font-size: 24px; /* Tamaño de la fuente */
+    color: white; /* Color del texto */
+    font-weight: bold; /* Grosor de la fuente */
+    margin-bottom: 10px; /* Espacio debajo del título */
+    text-align: center; /* Alineación del texto */
+    text-transform: uppercase; /* Convertir el texto a mayúsculas */
+    border-bottom: 2px solid #ccc; /* Línea debajo del título */
+    padding-bottom: 5px; /* Espacio debajo del texto dentro del borde */
+    background-color: #00bcd4 ;
+    border-radius: 10px;
+    padding: 5px;
 }
 
 /* Estilos para el botón de mostrar/ocultar comentarios */
