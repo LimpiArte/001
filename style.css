@@ -4,7 +4,7 @@ body {
     margin: 0; /* Elimina el margen por defecto */
     padding: 20px; /* Espaciado interno */
     color: #2c3e50; /* Color del texto */
-    background-image: url('/storage/emulated/0/Paginas web/está si/styles/fondos/pro.lipieza.fondo-2.jpg'); /* Imagen de fondo */
+    background-image: url('pro.lipieza.fondo-2.jpg'); /* Imagen de fondo */
     background-repeat: repeat; /* Repetir la imagen de fondo */
     background-size: 200px auto; /* Tamaño específico para la imagen de fondo */
     animation: moveBackground 10s linear infinite; /* Animación para mover el fondo */
